@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Rosaleslloyd</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">The Life of Lloyd</string>
+    <string name="second_fragment_label">Rosales</string>
+    <string name="next">Next</string>
+    <string name="previous">Logout</string>
+
+    <string name="lorem_ipsum">
+        Login Form
+
+
+    </string>
+
+    <string name="welcome_page">
+        Welcome To My Page
+    </string>
+    <string name="register_welcome">
+        Registration Form
+    </string>
+    <string name="words">
+        ACTIONS
+    </string>
+    <string name="luh">
+        Logout
+    </string>
+    <string name="button_text">
+        Login Here
+    </string>
+    <string name="button_register">
+        Register Here
+    </string>
+</resources>
