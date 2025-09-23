@@ -5,46 +5,49 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.rosaleslloyd.databinding.FragmentFirstBinding;
+import com.example.rosaleslloyd.model.User;
 
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.buttonFirst.setOnClickListener(v -> {
+            EditText usernameField = getActivity().findViewById(R.id.username);
+            EditText passwordField = getActivity().findViewById(R.id.password);
+
+            String inputUsername = usernameField.getText().toString().trim();
+            String inputPassword = passwordField.getText().toString().trim();
+
+            User user = SharedPrefManager.getInstance(getActivity()).getUser();
+
+            if (user != null && inputUsername.equals(user.getUsername()) && inputPassword.equals(user.getPassword())) {
                 Intent intent = new Intent(getActivity(), DashboardActivity.class);
                 startActivity(intent);
+            } else {
+                Toast.makeText(getActivity(), "Invalid credentials", Toast.LENGTH_SHORT).show();
             }
         });
 
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), RegisterForm.class);
-                startActivity(intent);
-            }
+        binding.buttonSecond.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), RegisterForm.class);
+            startActivity(intent);
         });
     }
 
@@ -53,5 +56,4 @@ public class FirstFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }
