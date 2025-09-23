@@ -35,7 +35,7 @@ public class FirstFragment extends Fragment {
             String inputUsername = usernameField.getText().toString().trim();
             String inputPassword = passwordField.getText().toString().trim();
 
-            User user = SharedPrefManager.getInstance(getActivity()).getUser();
+            User user = UserPrefManager.getInstance(getActivity()).getUser();
 
             if (user != null && inputUsername.equals(user.getUsername()) && inputPassword.equals(user.getPassword())) {
                 Intent intent = new Intent(getActivity(), DashboardActivity.class);

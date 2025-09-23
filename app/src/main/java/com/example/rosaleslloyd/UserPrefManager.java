@@ -6,23 +6,23 @@ import android.content.SharedPreferences;
 import com.example.rosaleslloyd.model.User;
 import com.google.gson.Gson;
 
-public class SharedPrefManager {
+public class UserPrefManager {
 
     private static final String SHARED_PREF_NAME = "user_pref";
     private static final String KEY_USER = "key_user";
 
-    private static SharedPrefManager mInstance;
+    private static UserPrefManager mInstance;
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
 
-    private SharedPrefManager(Context context) {
+    private UserPrefManager(Context context) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
 
-    public static synchronized SharedPrefManager getInstance(Context context) {
+    public static synchronized UserPrefManager getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new SharedPrefManager(context);
+            mInstance = new UserPrefManager(context);
         }
         return mInstance;
     }

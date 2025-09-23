@@ -40,7 +40,8 @@ public class RegisterForm extends AppCompatActivity {
                 Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             } else {
                 User user = new User(fname, lname, uname, mail, pass, phone);
-                SharedPrefManager.getInstance(this).saveUser(user);
+
+                UserPrefManager.getInstance(this).saveUser(user);
 
                 Intent intent = new Intent(this, DashboardActivity.class);
                 startActivity(intent);
