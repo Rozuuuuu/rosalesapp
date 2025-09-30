@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.example.rosaleslloyd.databinding.FragmentFirstBinding;
 import com.example.rosaleslloyd.model.User;
 
+import java.util.List;
+
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
@@ -35,9 +37,13 @@ public class FirstFragment extends Fragment {
             String inputUsername = usernameField.getText().toString().trim();
             String inputPassword = passwordField.getText().toString().trim();
 
-            User user = UserPrefManager.getInstance(getActivity()).getUser();
+            if (inputUsername.isEmpty() || inputPassword.isEmpty()) {
+                Toast.makeText(getActivity(), "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            if (user != null && inputUsername.equals(user.getUsername()) && inputPassword.equals(user.getPassword())) {
+            User user = UserPrefManager.getInstance(getActivity()).getUser(inputUsername, inputPassword);
+            if (user != null) {
                 Intent intent = new Intent(getActivity(), DashboardActivity.class);
                 startActivity(intent);
             } else {
