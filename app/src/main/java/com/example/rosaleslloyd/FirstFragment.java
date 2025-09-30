@@ -11,10 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.rosaleslloyd.Class.UserPrefManager;
 import com.example.rosaleslloyd.databinding.FragmentFirstBinding;
 import com.example.rosaleslloyd.model.User;
-
-import java.util.List;
 
 public class FirstFragment extends Fragment {
 

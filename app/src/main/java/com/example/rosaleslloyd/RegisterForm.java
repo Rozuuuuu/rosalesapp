@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rosaleslloyd.Class.UserPrefManager;
 import com.example.rosaleslloyd.model.User;
 
 public class RegisterForm extends AppCompatActivity {

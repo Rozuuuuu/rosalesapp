@@ -1,4 +1,4 @@
-package com.example.rosaleslloyd;
+package com.example.rosaleslloyd.Class;
 
 import android.content.Context;
 import android.content.SharedPreferences;

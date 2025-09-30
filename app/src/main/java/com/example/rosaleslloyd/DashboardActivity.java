@@ -1,77 +1,84 @@
 package com.example.rosaleslloyd;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.view.Gravity;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rosaleslloyd.Class.UserPrefManager;
 import com.example.rosaleslloyd.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    Button smsbutton, callbutton, emailbutton, logoutbutton;
-    ListView userListView;
+    private TableLayout userTable;
+    private Button logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        smsbutton = findViewById(R.id.button_sms);
-        callbutton = findViewById(R.id.button_call);
-        emailbutton = findViewById(R.id.button_email);
-        logoutbutton = findViewById(R.id.button_second);
-        userListView = findViewById(R.id.userListView);
+        userTable = findViewById(R.id.userTable);
+        logoutButton = findViewById(R.id.button_second);
 
-        smsbutton.setOnClickListener(v -> sendSMS());
-        callbutton.setOnClickListener(v -> makeCall());
-        emailbutton.setOnClickListener(v -> sendEmail());
-        logoutbutton.setOnClickListener(v -> logout());
+        logoutButton.setOnClickListener(v -> finish());
 
         displayUsers();
     }
 
     private void displayUsers() {
         List<User> users = UserPrefManager.getInstance(this).getAllUsers();
-        List<String> displayList = new ArrayList<>();
 
-        for (User user : users) {
-            displayList.add(user.getFirstName() + " " + user.getLastName() + " (" + user.getUsername() + ")");
+        if (users.isEmpty()) {
+            Toast.makeText(this, "No users found", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, displayList);
-        userListView.setAdapter(adapter);
+        // Add header row
+        TableRow headerRow = new TableRow(this);
+        headerRow.setPadding(8, 8, 8, 8);
+
+        headerRow.addView(createHeaderCell("Name"));
+        headerRow.addView(createHeaderCell("Username"));
+        headerRow.addView(createHeaderCell("Email"));
+
+        userTable.addView(headerRow);
+
+        // Add user rows
+        for (User user : users) {
+            TableRow row = new TableRow(this);
+            row.setPadding(8, 8, 8, 8);
+
+            row.addView(createCell(user.getFirstName() + " " + user.getLastName()));
+            row.addView(createCell(user.getUsername()));
+            row.addView(createCell(user.getEmail()));
+
+            userTable.addView(row);
+        }
     }
 
-    private void sendSMS() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("sms:09219978995"));
-        intent.putExtra("sms_body", "Hello from Dashboard!");
-        startActivity(intent);
+    private TextView createHeaderCell(String text) {
+        TextView cell = new TextView(this);
+        cell.setText(text);
+        cell.setTypeface(null, Typeface.BOLD);
+        cell.setGravity(Gravity.CENTER);
+        cell.setPadding(16, 16, 16, 16);
+        return cell;
     }
 
-    private void makeCall() {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:09219978995"));
-        startActivity(intent);
-    }
-
-    private void sendEmail() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:lrosales_ccs@uspf.edu.ph"));
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Dashboard Msg");
-        intent.putExtra(Intent.EXTRA_TEXT, "Hi there, this is lloyd");
-        startActivity(intent);
-    }
-
-    private void logout() {
-        finish();
+    private TextView createCell(String text) {
+        TextView cell = new TextView(this);
+        cell.setText(text);
+        cell.setGravity(Gravity.CENTER);
+        cell.setPadding(16, 16, 16, 16);
+        return cell;
     }
 }
